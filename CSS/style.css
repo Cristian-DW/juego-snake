@@ -2,9 +2,26 @@
    font-family: 'Share Tech Mono', monospace;
 }
 
+.container{
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+}
+
+#board{
+   display: grid;
+   grid-template-columns: repeat(10, 1fr);
+}
+
 #board, .boardInfo{
    max-width: 1000px;
+   
 }
+
+#start, .boardInfo{
+   font-size: 25px;
+}
+
 
 #gamerOver{
    display: none;

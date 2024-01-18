@@ -26,11 +26,10 @@ let snake, score, direction, boardSquares, emptySquares, moveInterval;
 const createBoard = () => {
   boardSquares.forEach((row, rowIndex) => {
     row.forEach((column, columnIndex) => {
-      const squareIndex = `${rowIndex}${columnIndex}`;
+      const squareValue = `${rowIndex}${columnIndex}`;
       const squareElement = document.createElement('div');
-      const squareValue = squareTypes.emptySquare;
       squareElement.setAttribute('class', 'square emptySquare');
-      squareElement.setAttribute('id', squareIndex);
+      squareElement.setAttribute('id', squareValue);
       board.appendChild(squareElement);
       emptySquares.push(squareValue);
     });
