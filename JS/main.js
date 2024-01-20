@@ -1,12 +1,12 @@
 const board = document.getElementById('board');
-const scoreBoard = document.getElementById('score');
+const scoreBoard = document.getElementById('scoreBoard');
 const startButton = document.getElementById('start');
 const gameOverSign = document.getElementById('gameOver');
 
 // Configuración del juego
 
 const boardSize = 10;
-const gameSpeed = 100;
+const gameSpeed = 200;
 const squareTypes = {
   emptySquare: 0,
   snakeSquare: 1,
@@ -49,8 +49,34 @@ const drawSquare = (square, type) => {
 
 const moveSnake = () => {
   const newSquare = String (
-    Number(snake[snake.length - 1]) + directions[direction]).padStart(2, '0')
+    Number(snake[snake.length - 1]) + directions[direction]).padStart(2, '0');
+    const [ row, column] = newSquare.split('');
+
+    if(newSquare < 0 || newSquare > boardSize * boardSize || (direction === 'arrowRight' &&column == 0) || (direction === 'arrowLeft'  && column ==  9 || boardSquares[row][column] === squareTypes.snakeSquare)){
+      gameOver(); 
+    }else{
+      snake.push(newSquare);
+      if(boardSquares[row][column] === squareTypes.foodSquare){
+        addFood();
+      }else{
+        const emptySquare = snake.shift();
+        drawSquare(emptySquare, 'emptySquare');
+      }
+      drawSnake();
+    }
 }
+
+    const addFood = () => {
+      score ++;
+      updateScore();
+      creaRandomFood();
+    }
+
+  const gameOver = () => {
+    clearInterval(moveInterval);
+    startButton.disabled = false;
+    gameOverSign.style.display = 'block';
+  }
 
 const setDirection = newDirection => {
   direction = newDirection
@@ -103,8 +129,8 @@ const createBoard = () => {
 + * Reinicia el estado del juego y crea un nuevo tablero de juego.
 + */
 const setGame = () => {
-  snake = ['00', '01', '02', '03'];
-  score = snake.length * 10;
+  snake = ['00', '01', '02'];
+  score = snake.length;
   direction = 'arrowRight';
   boardSquares = Array.from(Array(boardSize), () => new Array(boardSize).fill(squareTypes.emptySquare));
   board.innerHTML = '';

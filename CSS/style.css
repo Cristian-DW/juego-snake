@@ -1,10 +1,24 @@
 *{
    font-family: 'Share Tech Mono', monospace;
+  
 }
 
+body{
+   background-image: linear-gradient(to right, #fbc2eb, #a6c1ee), url('../img/logo200.png ');
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   overflow: hidden;
 
+}
 
+.gameTitle{
+   
+}
 #board{
+   width: 700px;
+   height: auto;
    display: grid;
    grid-template-columns: repeat(10, 1fr);
 }
@@ -54,9 +68,9 @@
 }
 
 .snakeSquare{
-   background-color: #ccf47f;
+   background-color: aquamarine;
 }
 
 .foodSquare{
-   background-color: #f35a69;
+   background-color: yellow;
 }
