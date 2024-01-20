@@ -23,6 +23,68 @@ const directions = {
 // Variables del juego
 let snake, score, direction, boardSquares, emptySquares, moveInterval;
 
+const drawSnake = () => {
+  snake.forEach(square => drawSquare(square, 'snakeSquare'));
+}
+
+// rellenar cada cuadrado del tablero 
+//@params
+//square: posicion del cuadrado
+//type: tipo de cuadrado (emptySquare, snakeSquare, foodSquare)
+const drawSquare = (square, type) => {
+  const  [row, column] = square.split('');
+  boardSquares[row][column] = squareTypes[type];
+  const squareElement = document.getElementById(square);
+  squareElement.setAttribute('class', `square ${type}`);
+
+  if (type === 'emptySquares') {
+    emptySquares.push(square);
+
+  }else{
+     if(emptySquares.indexOf(square) !== -1){
+       emptySquares.splice(emptySquares.indexOf(square), 1);
+     }
+  }
+};
+
+const moveSnake = () => {
+  const newSquare = String (
+    Number(snake[snake.length - 1]) + directions[direction]).padStart(2, '0')
+}
+
+const setDirection = newDirection => {
+  direction = newDirection
+}
+
+const directionEvent = key => {
+  switch (key.code) {
+    case 'ArrowUp':
+      direction !== 'arrowDown' && setDirection('arrowUp');
+      break;
+    case 'ArrowDown':
+      direction !== 'arrowUp' && setDirection('arrowDown');
+      break;
+    case 'ArrowLeft':
+      direction !== 'arrowRight' && setDirection('arrowLeft');
+      break;
+    case 'ArrowRight':
+      direction !== 'arrowLeft' && setDirection('arrowRight');
+      break;
+  }
+}
+
+const creaRandomFood = () => {
+  const randomSquare = emptySquares[Math.floor(Math.random() * emptySquares.length)];
+  drawSquare(randomSquare, 'foodSquare');
+}
+
+const updateScore = () => {
+  scoreBoard.innerText = score;
+}
+
+/**
++ * Crea el tablero del juego generando y agregando elementos de cuadrado al tablero.
++ */
 const createBoard = () => {
   boardSquares.forEach((row, rowIndex) => {
     row.forEach((column, columnIndex) => {
@@ -36,19 +98,33 @@ const createBoard = () => {
   });
 };
 
+
+/**
++ * Reinicia el estado del juego y crea un nuevo tablero de juego.
++ */
 const setGame = () => {
   snake = ['00', '01', '02', '03'];
-  score = snake.length;
+  score = snake.length * 10;
   direction = 'arrowRight';
   boardSquares = Array.from(Array(boardSize), () => new Array(boardSize).fill(squareTypes.emptySquare));
   board.innerHTML = '';
   emptySquares = [];
   createBoard();
+  creaRandomFood();
+  document.addEventListener('keydown', directionEvent);
+  moveInterval = setInterval(() => moveSnake(), gameSpeed);
 };
 
+
+/**Inicia el juego configurando el estado inicial, ocultando el cartel de fin de juego,
+deshabilitando el botón de inicio, dibujando la serpiente y actualizando el puntaje.
+*/
 const startGame = () => {
   setGame();
-  
+  gameOverSign.style.display = 'none';
+  startButton.disabled = true;
+  drawSnake();
+  updateScore();
 };
 
 startButton.addEventListener('click', startGame);
