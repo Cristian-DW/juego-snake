@@ -3,6 +3,9 @@ const scoreBoard = document.getElementById('scoreBoard');
 const startButton = document.getElementById('start');
 const gameOverSign = document.getElementById('gameOver');
 
+const foodColors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
+
+
 // Configuración del juego
 
 const boardSize = 10;
@@ -31,40 +34,55 @@ const drawSnake = () => {
 //@params
 //square: posicion del cuadrado
 //type: tipo de cuadrado (emptySquare, snakeSquare, foodSquare)
-const drawSquare = (square, type) => {
-  const  [row, column] = square.split('');
+const drawSquare = (square, type, color) => {
+  const [row, column] = square.split('');
   boardSquares[row][column] = squareTypes[type];
   const squareElement = document.getElementById(square);
   squareElement.setAttribute('class', `square ${type}`);
+  
+  if (color) {
+    squareElement.style.backgroundColor = color;
+  } else {
+    squareElement.style.backgroundColor = ''; // Limpiar el color si no se proporciona
+  }
 
-  if (type === 'emptySquares') {
+  if (type === 'emptySquare') {
     emptySquares.push(square);
-
-  }else{
-     if(emptySquares.indexOf(square) !== -1){
-       emptySquares.splice(emptySquares.indexOf(square), 1);
-     }
+  } else {
+    if (emptySquares.indexOf(square) !== -1) {
+      emptySquares.splice(emptySquares.indexOf(square), 1);
+    }
   }
 };
 
-const moveSnake = () => {
-  const newSquare = String (
-    Number(snake[snake.length - 1]) + directions[direction]).padStart(2, '0');
-    const [ row, column] = newSquare.split('');
 
-    if(newSquare < 0 || newSquare > boardSize * boardSize || (direction === 'arrowRight' &&column == 0) || (direction === 'arrowLeft'  && column ==  9 || boardSquares[row][column] === squareTypes.snakeSquare)){
-      gameOver(); 
-    }else{
-      snake.push(newSquare);
-      if(boardSquares[row][column] === squareTypes.foodSquare){
-        addFood();
-      }else{
-        const emptySquare = snake.shift();
-        drawSquare(emptySquare, 'emptySquare');
-      }
-      drawSnake();
+const moveSnake = () => {
+  const newSquare = String(
+    Number(snake[snake.length - 1]) + directions[direction]
+  ).padStart(2, '0');
+  const [row, column] = newSquare.split('');
+
+  if (
+    newSquare < 0 ||
+    newSquare >= boardSize * boardSize ||
+    (direction === 'arrowRight' && column == 0) ||
+    (direction === 'arrowLeft' && column == 9) ||
+    boardSquares[row][column] === squareTypes.snakeSquare
+  ) {
+    gameOver();
+  } else {
+    snake.push(newSquare);
+
+    if (boardSquares[row][column] === squareTypes.foodSquare) {
+      addFood();
+    } else {
+      const emptySquare = snake.shift();
+      drawSquare(emptySquare, 'emptySquare');
     }
-}
+
+    drawSnake();
+  }
+};
 
     const addFood = () => {
       score ++;
@@ -101,8 +119,11 @@ const directionEvent = key => {
 
 const creaRandomFood = () => {
   const randomSquare = emptySquares[Math.floor(Math.random() * emptySquares.length)];
-  drawSquare(randomSquare, 'foodSquare');
-}
+  const randomColor = foodColors[Math.floor(Math.random() * foodColors.length)];
+  drawSquare(randomSquare, 'foodSquare', randomColor);
+};
+
+
 
 const updateScore = () => {
   scoreBoard.innerText = score;
