@@ -1,5 +1,5 @@
 # snake game 🐍
-Este es un simple juego de la serpiente implementado utilizando HTML, CSS y JavaScript. ¡Disfruta de horas de diversión retro mientras controlas la serpiente y tratas de comer la mayor cantidad de comida posible!
+Este es un simple juego de la serpiente. ¡Disfruta de horas de diversión retro mientras controlas la serpiente y tratas de comer la mayor cantidad de comida posible!
 
 ## Cómo jugar
   Abre el archivo index.html en tu navegador web.
