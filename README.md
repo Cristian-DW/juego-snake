@@ -18,4 +18,4 @@ Este es un simple juego de la serpiente. ¡Disfruta de horas de diversión retro
 
   Si encuentras algún problema o tienes sugerencias para mejorar el juego, ¡no dudes en contribuir! Abre un problema o envía una solicitud de extracción.
 
-¡Diviértete jugando a Snake Game! 🐍🕹️
+¡Diviértete! 🐍🕹️
