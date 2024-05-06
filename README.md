@@ -9,9 +9,6 @@ Este es un simple juego de la serpiente. ¡Disfruta de horas de diversión retro
 
 ## Características
   Puntuación: Tu puntuación se incrementa cada vez que la serpiente come comida.
- Reiniciar: Puedes reiniciar el juego en cualquier momento presionando start.
-
-
-  Si encuentras algún problema o tienes sugerencias para mejorar el juego, ¡no dudes en contribuir! Abre un problema o envía una solicitud de extracción.
+ Reiniciar: Puedes reiniciar el juego en cualquier momento presionando 
 
 ¡Diviértete! 🐍🕹️
